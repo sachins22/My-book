@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
-import { Dimensions, StyleSheet, Text, View } from 'react-native';
+import { Dimensions, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Carousel from 'leon-react-native-snap-carousel';
 import { data } from '@/constants/data';
 import { Image } from 'expo-image';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { LinearGradient } from 'expo-linear-gradient';
 import { colors } from '@/constants/color';
+import { useRouter } from 'expo-router';
+
 
 const { width: screenWidth } = Dimensions.get('window');
 const sliderWidth = screenWidth; 
@@ -14,14 +16,17 @@ const itemWidth = 325;
 const gradients=colors;
 
 export default function Home() {
+    const router = useRouter();
     const [activeIndex, setActiveIndex] = useState(0);
 
 
     const renderItem = ({ item, index }) => {
         return (
+            <TouchableOpacity onPress={()=> router.push({ pathname: 'imageViews', params: { image: item } })}>
             <View style={styles.slide} key={index}>
                 <Image source={item} style={styles.image} />
             </View>
+            </TouchableOpacity>
         );
     };
    
